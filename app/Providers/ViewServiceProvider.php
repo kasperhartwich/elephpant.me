@@ -9,33 +9,21 @@ use Illuminate\Support\ServiceProvider;
 
 class ViewServiceProvider extends ServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         View::composer(['auth.register', 'profile.edit'], function ($view) {
-            $countries = (new CountriesQuery())->fetchAll()->mapWithKeys(function ($country) {
-                return [
-                    $country['cca3'] => [
-                        'name' => $country['name']['common'],
-                        'flag' => $country['flag']['flag-icon'],
-                    ]
-                ];
-            });
-
-            $view->with('countries', $countries);
+            $view->with('countries', (new CountriesQuery())->fetchAll());
         });
 
         View::composer(['ranking.index', 'trade._user', 'herd.show', 'trade.index'], function ($view) {
-            $usersQuery = (new UsersCountryQuery)->fetchAll();
-            $countries = (new CountriesQuery())->fetchAll()->filter(function ($country) use ($usersQuery) {
-                return in_array($country['cca3'], $usersQuery->unique('country_code')->pluck('country_code')->toArray());
-            })->mapWithKeys(function ($country) {
-                return [
-                    $country['cca3'] => [
-                        'name' => $country['name']['common'],
-                        'flag' => $country['flag']['flag-icon'],
-                    ]
-                ];
-            });
+            $userCountryCodes = (new UsersCountryQuery())->fetchAll()
+                ->pluck('country_code')
+                ->unique()
+                ->all();
+
+            $countries = (new CountriesQuery())->fetchAll()
+                ->filter(fn ($country) => in_array($country->get('cca3'), $userCountryCodes, true));
+
             $view->with('countries', $countries);
         });
     }

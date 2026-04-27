@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Elephpant;
+use App\Models\Elephpant;
 use App\Http\Requests\AdoptionRequest;
 use Illuminate\Support\Facades\Auth;
 

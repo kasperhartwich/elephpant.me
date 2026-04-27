@@ -2,20 +2,20 @@
 
 namespace App\Providers;
 
-use App\ElephpantUser;
+use App\Models\ElephpantUser;
+use App\Models\User;
 use App\Observers\ElephpantUserObserver;
 use App\Observers\UserObserver;
-use App\User;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    public function register()
+    public function register(): void
     {
         //
     }
 
-    public function boot()
+    public function boot(): void
     {
         User::observe(UserObserver::class);
         ElephpantUser::observe(ElephpantUserObserver::class);

@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Queries;
 
-use App\Elephpant;
+use App\Models\Elephpant;
 use App\Queries\TradingUsersQueryOption;
-use App\User;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 
 final class TradingUsersQuery
 {
     private const USER_MATCHING_LIMIT = 5;
 
-    public function fetchAll(User $user, TradingUsersQueryOption $options = null, int $limit = self::USER_MATCHING_LIMIT)
+    public function fetchAll(User $user, ?TradingUsersQueryOption $options = null, int $limit = self::USER_MATCHING_LIMIT)
     {
         $userElephpants = $user->elephpants;
 
@@ -32,7 +32,7 @@ final class TradingUsersQuery
         return $traders;
     }
 
-    private function fetchTraders(Collection $userElephpants, TradingUsersQueryOption $options = null, int $limit)
+    private function fetchTraders(Collection $userElephpants, ?TradingUsersQueryOption $options, int $limit)
     {
         $userElephpants = $userElephpants->pluck('id');
 

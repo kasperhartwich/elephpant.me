@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Queries\TradingUsersQuery;
 use App\Queries\ElephpantsQuery;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

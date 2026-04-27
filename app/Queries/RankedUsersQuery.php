@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Queries;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 
 final class RankedUsersQuery

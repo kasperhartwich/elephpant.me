@@ -1,14 +1,11 @@
-// Fonts
-//@import url('https://fonts.googleapis.com/css?family=Open+Sans');
-
 // Variables
 @import 'variables';
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import 'bootstrap/scss/bootstrap';
 
 // Icons
-@import '~flag-icon-css/sass/flag-icon.scss';
+@import 'flag-icons/sass/flag-icons';
 
 body {
     background-color: #fcfcfc;
@@ -37,7 +34,6 @@ body {
 }
 
 .jumbotron {
-    //@extend .py-5;
     .lead {
         margin-bottom: 0;
     }

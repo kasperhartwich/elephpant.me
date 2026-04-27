@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Queries;
 
-use App\Elephpant;
+use App\Models\Elephpant;
 use Illuminate\Database\Eloquent\Collection;
 
 final class ElephpantsQuery

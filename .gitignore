@@ -1,27 +1,36 @@
-# Laravel Directorys
+# Laravel directories
+/.phpunit.cache
+/bootstrap/ssr
+/node_modules
+/public/build
 /public/hot
 /public/storage
 /storage/*.key
+/storage/pail
 /vendor
-/.vagrant
-/storage/logs
 
-# Laravel Files
+# Laravel files
 .env
+.env.backup
+.env.production
+.phpunit.result.cache
 Homestead.json
 Homestead.yaml
+auth.json
 npm-debug.log
 yarn-error.log
-.phpunit.result.cache
 
-# Visual Studio Files
-source/.vs/
-.vs/
+# IDE / editor
+/.fleet
+/.idea
+/.nova
 /.vscode
+/.zed
+.vs/
+source/.vs/
 
-# Dependecies
-/node_modules
-.npm
-npm-debug.log*
+# Logs
 logs
 *.log
+npm-debug.log*
+.npm

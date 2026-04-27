@@ -4,31 +4,22 @@ declare(strict_types=1);
 
 namespace App\Queries;
 
-use PragmaRX\Countries\Package\Countries;
-use PragmaRX\Countries\Package\Support\Collection;
+use Illuminate\Support\Collection;
+use Rinvex\Country\CountryLoader;
 
 final class CountriesQuery
 {
     public function fetchAll(): Collection
     {
-        return $this->collection();
-    }
-
-    public function fetchAllPlucked(): Collection
-    {
-        return $this->collection()
-            ->pluck('name.common', 'cca3');
-    }
-
-    public function flags(): Collection
-    {
-        return $this->collection()
-            ->pluck('flag.flag-icon', 'cca3');
-    }
-
-    private function collection(): Collection
-    {
-        return (new Countries())->all()
-            ->sortBy('name.common');
+        return collect(CountryLoader::countries())
+            ->mapWithKeys(fn (array $country): array => [
+                $country['iso_3166_1_alpha3'] => collect([
+                    'cca3' => $country['iso_3166_1_alpha3'],
+                    'cca2' => $country['iso_3166_1_alpha2'],
+                    'name' => $country['name'],
+                    'flag' => 'fi fi-'.strtolower($country['iso_3166_1_alpha2']),
+                ]),
+            ])
+            ->sortBy(fn (Collection $country): string => $country->get('name'));
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\ElephpantUser;
+use App\Models\ElephpantUser;
 
 class ElephpantUserObserver
 {

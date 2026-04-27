@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\MessageRequest;
 use App\Mail\UserMessage;
-use App\Message;
-use App\User;
+use App\Models\Message;
+use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 
 class MessageController extends Controller

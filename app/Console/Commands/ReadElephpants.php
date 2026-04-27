@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Elephpant;
+use App\Models\Elephpant;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image;
+use Intervention\Image\Laravel\Facades\Image;
 
 class ReadElephpants extends Command
 {
@@ -21,12 +21,12 @@ class ReadElephpants extends Command
         foreach ($elephpants as $elephpant) {
             Elephpant::query()
                 ->updateOrCreate(
-                    ['id' => (int)$elephpant->id],
+                    ['id' => (int) $elephpant->id],
                     [
                         'name' => $elephpant->name,
                         'description' => $elephpant->description,
                         'sponsor' => $elephpant->sponsor,
-                        'year' => (int)$elephpant->year,
+                        'year' => (int) $elephpant->year,
                         'image' => $this->processImage($elephpant),
                     ]
                 );
@@ -38,8 +38,8 @@ class ReadElephpants extends Command
     {
         if (isset($elephpant->image) && $elephpant->image) {
             $localImagePath = public_path(sprintf('/images/elephpants/%s', $elephpant->image));
-            $image = Image::make($localImagePath);
-            $image->fit(300);
+            $image = Image::read($localImagePath);
+            $image->cover(300, 300);
             $imageName = sprintf('%d-%s.jpg', $elephpant->id, Str::slug($elephpant->name));
             $filePath = storage_path(sprintf('app/public/elephpants/%s', $imageName));
             File::makeDirectory(dirname($filePath), 0755, true, true);

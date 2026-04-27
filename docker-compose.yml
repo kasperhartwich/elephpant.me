@@ -1,13 +1,11 @@
-version: '3.3'
-
 services:
-  mailhog:  # MailHog - Fake SMTP server (optional).
+  mailhog:
     image: mailhog/mailhog:latest
     ports:
-      - '1025:1025'  # Port 1025 => SMTP.
-      - '8025:8025'  # Port 8025 => Web dashboard (http://127.0.0.1:8025).
+      - '1025:1025'
+      - '8025:8025'
   mysql:
-    image: mysql:5.7
+    image: mysql:8.0
     volumes:
       - mysql-data:/var/lib/mysql
     restart: always
@@ -15,18 +13,21 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: elephpant
-      MYSQL_DATABASE: elephpant 
+      MYSQL_DATABASE: elephpant
       MYSQL_USER: elephpant
-      MYSQL_PASSWORD: elephpant 
+      MYSQL_PASSWORD: elephpant
   elephpant:
-    image: ambientum/php:7.4-nginx
-    container_name: barracao-php
+    image: serversideup/php:8.4-fpm-nginx
+    container_name: elephpant-php
     ports:
       - "8080:8080"
     volumes:
-      - .:/var/www/app
-      - ~/.composer/docker-cache/:/root/.composer:cached
-    links:
+      - .:/var/www/html
+      - ~/.composer/docker-cache/:/composer:cached
+    environment:
+      PHP_OPCACHE_ENABLE: "1"
+      AUTORUN_ENABLED: "true"
+    depends_on:
       - mysql
       - mailhog
 volumes:
