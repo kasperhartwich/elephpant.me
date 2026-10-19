@@ -3,7 +3,7 @@
         <div>
             <flux:heading size="xl" level="1">{{ __('API tokens') }}</flux:heading>
             <flux:text class="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                Tokens let your scripts and apps use the <flux:link href="{{ url('/docs') }}">API</flux:link> as you. Send one as <code>Authorization: Bearer {token}</code>.
+                Tokens let you automate things or use the <flux:link href="{{ url('/docs') }}">API</flux:link> from an AI agent. Send one as <code>Authorization: Bearer {token}</code>.
             </flux:text>
         </div>
         <flux:modal.trigger name="create-token">
@@ -39,7 +39,7 @@
                             <flux:table.cell>{{ $token->created_at->diffForHumans() }}</flux:table.cell>
                             <flux:table.cell>{{ $token->last_used_at?->diffForHumans() ?? 'Never' }}</flux:table.cell>
                             <flux:table.cell align="end">
-                                <flux:button size="sm" variant="danger" wire:click="revoke({{ $token->id }})" wire:confirm="Revoke the token {{ $token->name }}? Scripts using it stop working.">
+                                <flux:button size="sm" variant="danger" wire:click="revoke({{ $token->id }})" wire:confirm="Revoke the token {{ $token->name }}? Anything using it stops working.">
                                     {{ __('Revoke') }}
                                 </flux:button>
                             </flux:table.cell>
@@ -58,7 +58,7 @@
             </div>
             <flux:field>
                 <flux:label>{{ __('Name') }}</flux:label>
-                <flux:input wire:model="name" placeholder="my-script" required maxlength="255" />
+                <flux:input wire:model="name" placeholder="my-agent" required maxlength="255" />
                 <flux:error name="name" />
             </flux:field>
             <div class="flex">

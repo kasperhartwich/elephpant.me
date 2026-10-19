@@ -12,15 +12,15 @@ test('guests are redirected to login from the api tokens page', function (): voi
 
 test('api tokens page lists only your own tokens', function (): void {
     $user = User::factory()->create();
-    $user->createToken('my-script');
-    User::factory()->create()->createToken('someone-elses-script');
+    $user->createToken('my-agent');
+    User::factory()->create()->createToken('someone-elses-agent');
 
     $this->actingAs($user)
         ->get(route('api-tokens.index'))
         ->assertOk()
         ->assertSeeLivewire(ApiTokens::class)
-        ->assertSee('my-script')
-        ->assertDontSee('someone-elses-script');
+        ->assertSee('my-agent')
+        ->assertDontSee('someone-elses-agent');
 });
 
 test('a token can be created and is shown once', function (): void {
@@ -28,15 +28,15 @@ test('a token can be created and is shown once', function (): void {
     $this->actingAs($user);
 
     $component = Livewire::test(ApiTokens::class)
-        ->set('name', 'my-script')
+        ->set('name', 'my-agent')
         ->call('create')
         ->assertHasNoErrors()
         ->assertSet('name', '')
-        ->assertSee('my-script');
+        ->assertSee('my-agent');
 
     $plainTextToken = $component->get('plainTextToken');
 
-    expect($user->tokens()->pluck('name')->all())->toBe(['my-script'])
+    expect($user->tokens()->pluck('name')->all())->toBe(['my-agent'])
         ->and($plainTextToken)->toBeString();
 
     $component->assertSee($plainTextToken);
